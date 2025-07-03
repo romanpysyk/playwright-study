@@ -30,7 +30,15 @@ export default defineConfig<EyesFixture>({
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: '@applitools/eyes-playwright/reporter',
+  reporter: [
+    process.env.CI ? ["dot"] : ["list"],
+    [
+      "@argos-ci/playwright/reporter",
+      {
+        uploadToArgos: !!process.env.CI,
+      },
+    ],
+  ],
 
   // [['json', {outputFile: 'test-results/jsonReport.json'}],
   //           ['junit', {outputFile: 'test-results/junitReport.xml'}],
@@ -63,6 +71,7 @@ export default defineConfig<EyesFixture>({
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
+    screenshot: 'only-on-failure',
     // actionTimeout: 5000,
     navigationTimeout: 5000,
     headless: false,
