@@ -74,7 +74,7 @@ export default defineConfig<EyesFixture>({
     screenshot: 'only-on-failure',
     // actionTimeout: 5000,
     navigationTimeout: 5000,
-    headless: false,
+    headless: true,
     video: {
       mode: 'off',
       size: { width: 1920, height: 1080 }
